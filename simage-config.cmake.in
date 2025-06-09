@@ -1,0 +1,97 @@
+# CMake package configuration file for @PROJECT_NAME@
+#
+# Defines the target "@PROJECT_NAME@::@PROJECT_NAME@"
+#
+# Add the following lines to your CMakeLists.txt to depend on @PROJECT_NAME@
+#
+#    find_package(@PROJECT_NAME@ REQUIRED)
+#    target_link_libraries(my_target_name @PROJECT_NAME@::@PROJECT_NAME@)
+#
+# Additionally you may use one of the following variables (or their corresponding
+# upper case version) that are also defined.
+#
+# @PROJECT_NAME@_COMPILE_DEFINITIONS
+# @PROJECT_NAME@_DEFINITIONS
+# @PROJECT_NAME@_INCLUDE_DIRS
+# @PROJECT_NAME@_INCLUDE_DIR
+# @PROJECT_NAME@_LIBRARY
+# @PROJECT_NAME@_LIBRARIES
+# @PROJECT_NAME@_LIBRARY_DIRS
+# @PROJECT_NAME@_LIBRARY_DIR
+#
+# However, in most cases using the @PROJECT_NAME@::@PROJECT_NAME@ target is sufficient,
+# and you won't need these variables.
+
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+
+set(simage_BUILD_SHARED_LIBS @SIMAGE_BUILD_SHARED_LIBS@)
+if(NOT simage_BUILD_SHARED_LIBS)
+  set(_simage_have_qt6 @Qt6_FOUND@)
+  set(_simage_have_qt5 @Qt5_FOUND@)
+  set(_simage_have_qt4 @Qt4_FOUND@)
+  if(_simage_have_qt6)
+    find_dependency(Qt6Core)
+    find_dependency(Qt6Gui)
+  elseif(_simage_have_qt5)
+    find_dependency(Qt5Core)
+    find_dependency(Qt5Gui)
+  elseif(_simage_have_qt4)
+    find_dependency(Qt4 COMPONENTS QtCore QtGui)
+  endif()
+  set(_simage_quicktime_support @SIMAGE_QUICKTIME_SUPPORT@)
+  if(_simage_quicktime_support)
+    find_dependency(QuickTime)
+  endif()
+  set(_simage_have_giflib @GIF_FOUND@)
+  if(_simage_have_giflib)
+    find_dependency(GIF)
+  endif()
+  set(_simage_have_jasper @JASPER_FOUND@)
+  if(_simage_have_jasper)
+    find_dependency(Jasper)
+  endif()
+  set(_simage_have_jpeglib @JPEG_FOUND@)
+  if(_simage_have_jpeglib)
+    find_dependency(JPEG)
+  endif()
+  set(_simage_have_pnglib @PNG_FOUND@)
+  if(_simage_have_pnglib)
+    find_dependency(PNG)
+  endif()
+  set(_simage_have_tifflib @TIFF_FOUND@)
+  if(_simage_have_tifflib)
+    find_dependency(TIFF)
+  endif()
+endif()
+
+include("${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME_LOWER@-export.cmake")
+
+get_property(@PROJECT_NAME@_COMPILE_DEFINITIONS TARGET @PROJECT_NAME@::@PROJECT_NAME@ PROPERTY INTERFACE_COMPILE_DEFINITIONS)
+foreach(_def ${@PROJECT_NAME@_COMPILE_DEFINITIONS})
+  list(APPEND @PROJECT_NAME@_DEFINITIONS -D${_def})
+endforeach()
+
+get_property(@PROJECT_NAME@_INCLUDE_DIRS TARGET @PROJECT_NAME@::@PROJECT_NAME@ PROPERTY INTERFACE_INCLUDE_DIRECTORIES)
+set(@PROJECT_NAME@_INCLUDE_DIR ${@PROJECT_NAME@_INCLUDE_DIRS})
+set(@PROJECT_NAME@_LIBRARY @PROJECT_NAME@::@PROJECT_NAME@)
+get_property(@PROJECT_NAME@_LIBRARIES TARGET @PROJECT_NAME@::@PROJECT_NAME@ PROPERTY INTERFACE_LINK_LIBRARIES)
+set(@PROJECT_NAME@_LIBRARIES @PROJECT_NAME@::@PROJECT_NAME@ ${@PROJECT_NAME@_LIBRARIES})
+set(@PROJECT_NAME@_LIBRARY_DIRS "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_LIBDIR@")
+set(@PROJECT_NAME@_LIBRARY_DIR ${@PROJECT_NAME@_LIBRARY_DIRS})
+
+# For backwards compatibility define upper case versions of output variables
+foreach(_var
+  @PROJECT_NAME@_COMPILE_DEFINITIONS
+  @PROJECT_NAME@_DEFINITIONS
+  @PROJECT_NAME@_INCLUDE_DIRS
+  @PROJECT_NAME@_INCLUDE_DIR
+  @PROJECT_NAME@_LIBRARY
+  @PROJECT_NAME@_LIBRARIES
+  @PROJECT_NAME@_LIBRARY_DIRS
+  @PROJECT_NAME@_LIBRARY_DIR
+  )
+  string(TOUPPER ${_var} _uppercase_var)
+  set(${_uppercase_var} ${${_var}})
+endforeach()

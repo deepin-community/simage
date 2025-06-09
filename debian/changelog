@@ -1,5 +1,187 @@
-template-repository (1.0-1) unstable; urgency=medium
+simage (1.8.3+ds-2) unstable; urgency=medium
 
-  * Initial release
+  [ Steve Robbins ]
+  * [6873332] Drop use of embedded quantize code in favour of using giflib
+    version.  The gifbib prototype has added const qualifiers that make the
+    function delcarations incompatible.  Closes: #1065721.
 
- -- Tsic404 <liuheng@deepin.org>  Sat, 28 Jan 2023 13:46:49 +0800
+ -- Steve M. Robbins <smr@debian.org>  Sat, 09 Mar 2024 17:39:45 -0600
+
+simage (1.8.3+ds-1) unstable; urgency=medium
+
+  [ Steve Robbins ]
+  * [abae010] Add watch file.
+  * [a232d5f] Upstream source: set to github.  Add files-excluded.
+    Fix copyright short name.
+  * [5ffbb4e] New upstream version 1.8.3+ds
+  * [0a796d0] Don't add C flags to pkgconfig file.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 02 Jul 2023 14:16:30 -0500
+
+simage (1.8.0-2) unstable; urgency=medium
+
+  [ Steve Robbins ]
+  * New patch 0002-Change-non-error-output-to-stdout-instead-of-stderr.
+    Change example code used in debian/tests to print non-error output
+    to stdout rather than stderr.  Needed because output on stderr
+    is considered a test failure.
+
+ -- Steve M. Robbins <smr@debian.org>  Mon, 10 Feb 2020 20:55:18 -0600
+
+simage (1.8.0-1) unstable; urgency=medium
+
+  [ Steve Robbins ]
+  * New upstream version 1.8.0
+  * Update to debhlper 12.  Switch to cmake build system.
+  * Refresh patches for 1.8.0.  New patch to fix CMake configuration.
+  * Update files installed for libsimage-dev: no binary, no manpage, no Coin integration file.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 26 Jan 2020 14:13:58 -0600
+
+simage (1.7.1~2c958a6.dfsg-5) unstable; urgency=medium
+
+  * Team upload.
+  * [fdb52c1] Remove Testsuite-field in d/control
+  * [c414858] Update VCS-fields to salsa
+  * [7692dc1] Set Standards-Version to 4.1.4
+  * [75c428f] Remove myself from uploaders
+  * [b8c3acb] Remove multi-atch: foreign from d/control
+
+ -- Anton Gladky <gladk@debian.org>  Tue, 22 May 2018 21:13:39 +0200
+
+simage (1.7.1~2c958a6.dfsg-4) unstable; urgency=medium
+
+  * [d223a78] Replace stderr by stdout in example.
+
+ -- Anton Gladky <gladk@debian.org>  Tue, 06 Sep 2016 19:59:40 +0200
+
+simage (1.7.1~2c958a6.dfsg-3) unstable; urgency=medium
+
+  * [cd13cae] Apply cme fix dpkg.
+  * [7aee1b8] Add autopkgtest.
+  * [2132d39] Add include-binaries for the test image.
+
+ -- Anton Gladky <gladk@debian.org>  Sun, 04 Sep 2016 19:23:07 +0200
+
+simage (1.7.1~2c958a6.dfsg-2.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Fix FTBFS for libpng 1.6 (Closes: #648126)
+
+ -- Tobias Frost <tobi@debian.org>  Thu, 07 Jan 2016 13:14:52 +0100
+
+simage (1.7.1~2c958a6.dfsg-2) unstable; urgency=low
+
+  * [c1de859] Build-depend on libtiff-dev rather than libtiff4-dev.
+  * [edf2727] Use autotools_dev in debian/rules. (Closes: #727506)
+  * [1f700b0] Use wrap-and-sort.
+
+ -- Anton Gladky <gladk@debian.org>  Sat, 26 Oct 2013 22:10:06 +0200
+
+simage (1.7.1~2c958a6.dfsg-1) unstable; urgency=low
+
+  * [1be4aa5] Change BD from libpng12-dev to libpng-dev. (Closes: #662501)
+  * [8234963] Imported Upstream version 1.7.1~2c958a6.dfsg
+  * [7e98ca1] Use DEP-5 for copyright. Update license info (BSD-license).
+  * [8087795] Install examples.
+
+ -- Anton Gladky <gladk@debian.org>  Thu, 06 Jun 2013 22:11:44 +0200
+
+simage (1.7.0-2) unstable; urgency=low
+
+  * [9b70640] Switch to git.
+  * [89d6206] Update homepage.
+  * [55817ca] Use 3.0 (quilt) format
+  * [1dd0c81] Use compat-level 9
+  * [697b65e] Move to dh.
+  * [b4f09fc] Implement multiarch.
+  * [6534595] Use Standards-Version: 3.9.4. No changes.
+  * [dca881b] Use canonical VCS-field.
+  * [0148584] Update description.
+
+ -- Anton Gladky <gladk@debian.org>  Thu, 06 Jun 2013 09:05:48 +0200
+
+simage (1.7.0-1.1) unstable; urgency=high
+
+  * Non-maintainer upload.
+  * Use libjpeg-dev instead of libjpeg62-dev (closes: #629974).
+
+ -- Julien Cristau <jcristau@debian.org>  Mon, 25 Jul 2011 23:22:41 +0200
+
+simage (1.7.0-1) unstable; urgency=low
+
+  * New upstream.
+    - updates to autotooling, including libtool scripts.  Closes: #342685.
+
+  * patches/01_src-Makefile-link-with-c.diff:
+  * patches/02_simage-config.patch: Removed.  Issued addressed upstream.
+  
+  * patches/01_configure-shared-static.patch: New.  Allow building both
+    shared and static libs.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 27 Feb 2010 12:00:41 -0600
+
+simage (1.6.1-5) unstable; urgency=low
+
+  * patches/02_simage-config.patch: New.  Remove problematic whitespace
+    ahead of here-doc delimiter "EOF".  Closes: #551337.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 17 Oct 2009 16:44:15 -0500
+
+simage (1.6.1-4) unstable; urgency=low
+
+  * control: Change deps from transitional packages of libgif to actual
+    packages.  Closes: #540530.  Add ${misc:Depends}.  Set
+    Standards-Version to 3.8.3.
+
+  * compat:
+  * control: Update debhelper compatibility to version 7.
+  
+  * rules: Set dependency_libs variable in .la file to empty string, per
+    http://lists.debian.org/debian-devel/2009/08/msg00783.html
+  
+ -- Steve M. Robbins <smr@debian.org>  Sun, 06 Sep 2009 20:56:11 -0500
+
+simage (1.6.1-3) unstable; urgency=low
+
+  * control: Build-depend on cdbs, v5 of debhelper, and autotools-dev.
+    Update Standards-Version to 3.7.3: change ${Source-Version} to
+    ${binary:Version}.  Package libsimage-dev depends on all the graphic
+    library -dev packages required to build.  Closes: #459781.
+  
+  * rules: Rewrite using cdbs.  CDBS automatically updates config.guess &
+    config.sub.  Closes: #342685.
+  
+  * debian/patches/01_src-Makefile-link-with-c.diff: New.  Patch extracted
+    from existing debian diff.
+
+ -- Steve M. Robbins <smr@debian.org>  Tue, 08 Jan 2008 21:36:46 -0600
+
+simage (1.6.1-2) unstable; urgency=low
+
+  * debian/rules: Drop optimization level to -O2 for m68k in hopes
+  of being able to compile on that platform.
+
+ -- Steve M. Robbins <smr@debian.org>  Mon, 15 Aug 2005 22:57:58 -0400
+
+simage (1.6.1-1) unstable; urgency=low
+
+  * New upstream version.
+  
+  * src/Makefile.in: Do not use C++ compiler to link.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 16 Jul 2005 23:39:37 -0400
+
+simage (1.6.0-2) unstable; urgency=low
+
+  * configure: don't quote "$LD" (thanks, Andreas Jochens).  Closes: #266240.
+
+  * debian/control: put libsimage-dev in section libdevel.  Closes: #266391.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 29 Aug 2004 18:44:38 -0400
+
+simage (1.6.0-1) unstable; urgency=low
+
+  * Initial Debian packaging.  Closes: #109041.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 25 Jul 2004 16:10:57 -0400

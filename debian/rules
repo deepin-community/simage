@@ -1,4 +1,11 @@
 #!/usr/bin/make -f
 
 %:
-	dh $@
+	dh $@ --buildsystem=cmake
+
+# Need to override all the autotools stuff because the sources still
+# have autoconf/automake files in them.  Running the dh_ auto stuff
+# fails, however.
+override_dh_update_autotools:
+override_dh_update_autotools_config:
+override_dh_autoreconf:

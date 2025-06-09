@@ -1,0 +1,49 @@
+From: Steve Robbins <steve@sumost.ca>
+Date: Sat, 9 Mar 2024 17:24:30 -0600
+Subject: Drop use of embedded quantize code in favour of using giflib version. 
+
+The gifbib prototype has added const qualifiers that make the 
+function delcarations incompatible.  Closes: #1065721.
+
+---
+ CMakeLists.txt   | 6 +-----
+ src/simage_gif.c | 2 +-
+ 2 files changed, 2 insertions(+), 6 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ebf37fa..24f1985 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -458,10 +458,6 @@ if(NOT SIMAGE_QUICKTIME_SUPPORT AND NOT SIMAGE_CGIMAGE_SUPPORT AND NOT SIMAGE_GD
+     src/simage_png.c
+     src/simage_tiff.c
+   )
+-  if(GIF_FOUND AND NOT GIF_VERSION VERSION_LESS 5.1.9)
+-    list(APPEND HDRS giflib/quantize.h)
+-    list(APPEND SRCS giflib/quantize.c)
+-  endif()
+ endif()
+ 
+ if(WIN32)
+@@ -557,7 +553,7 @@ if(SIMAGE_GDIPLUS_SUPPORT)
+ endif()
+ 
+ if(SIMAGE_GIF_SUPPORT)
+-  target_include_directories(${PROJECT_NAME} PRIVATE ${GIF_INCLUDE_DIR} $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/giflib>)
++  target_include_directories(${PROJECT_NAME} PRIVATE ${GIF_INCLUDE_DIR})
+   target_link_libraries(${PROJECT_NAME} PRIVATE ${GIF_LIBRARIES})
+   #list(APPEND PKG_CONFIG_REQUIRES_PRIVATE "libgif") #does not provide .pc file
+   list(APPEND INCLUDE_DEPENDENCIES ${GIF_INCLUDE_DIR})
+diff --git a/src/simage_gif.c b/src/simage_gif.c
+index 1a7611a..01d74bc 100644
+--- a/src/simage_gif.c
++++ b/src/simage_gif.c
+@@ -34,7 +34,7 @@
+ #if GIFLIB_MAJOR > 5 || GIFLIB_MAJOR == 5 && GIFLIB_MINOR >= 2 || GIFLIB_MAJOR == 5 && GIFLIB_MINOR == 1 && GIFLIB_RELEASE >= 9
+ //see https://sourceforge.net/p/giflib/bugs/132/
+ //and https://sourceforge.net/p/giflib/bugs/142/
+-#include <quantize.h>
++#include <gif_lib.h>
+ #endif
+ 
+ #if GIFLIB_MAJOR > 5 || GIFLIB_MAJOR == 5 && GIFLIB_MINOR >= 1

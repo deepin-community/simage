@@ -1,0 +1,3 @@
+0001-Change-non-error-output-to-stdout-instead-of-stderr.patch
+0002-Don-t-add-build-flags-to-pc-file-lintian-complains.patch
+0003-Drop-use-of-embedded-quantize-code-in-favour-of-usin.patch

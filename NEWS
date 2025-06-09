@@ -1,0 +1,103 @@
+New in v1.8.3 (2022-04-22):
+* bugfixes:
+  - Fix regression issue when loading small images (<256 byte)
+
+New in v1.8.2 (2022-04-09):
+* bugfixes:
+  - Fix for detection of VFW and GdiPlus issue
+  - Fix more static analysis issues
+  - Fix warning multiplication result converted to larger type
+  - Fix warning local variable hides global variable
+  - Add missing REQUIRED keyword in CMake build script
+  - Fix for Qt6 handling in CMake build script
+  - Add Qt6 dependencies to CMake package config file
+  - Fix find_dependency calls in CMake package config file
+  - Use PROJECT_ variables in CMake build script
+
+New in v1.8.1 (2021-01-11):
+* new:
+  - Version control system has been changed from Mercurial to Git
+  - Home of Coin3d organization has been changed from https://bitbucket.org/Coin3D
+    to https://github.com/coin3d due to Bitbucket ending Mercurial support
+  - Add Qt6 support
+
+* bugfixes:
+  - cpack.d was made optional and disabled by default (add -DSIMAGE_USE_CPACK=ON
+    to the cmake commandline to enable it)
+  - Miscellaneous documentation fixes
+  - Add missing doxygen file for CMake
+  - Include copy of GifQuantizeBuffer function from giflib
+  - Fix CMake test and link libraries for CGImage
+  - Fix potentially uninitialized local pointer variable
+  - Add missing math library when linking against static libpng
+  - Added missing welcome file
+  - Add options to disable building of examples and tests
+  - Link FLAC when static linking with libsndfile
+  - Fix Ogg and Vorbis static link order and use separate find packages
+  - Fix CoreFoundation typo in CGImage test
+  - Add support for MSVC static/dynamic runtime libraries (add -DSIMAGE_USE_MSVC_STATIC_RUNTIME=ON
+    to enable it)
+  - Fix for pkg-config file generation
+  - Fix for CMake 3.19.1 regression
+  - Fix for MinGW build
+  - Add option to prefer static libs for MinGW build (add -DSIMAGE_USE_STATIC_LIBS=ON
+    to enable it)
+  - Fix for interface changes in newer giflib
+  - Link LZMA and ZSTD when static linking with libtiff
+  - Fix for broken ABI version on .so link
+
+New in v1.8.0 (2019-12-23):
+* new:
+  - Kongsberg Oil & Gas Technologies AS ended simage as a commercial product
+    and re-licensed it under the BSD 3-clause license as a service to the
+    user community.
+  - The build system has been migrated from GNU Autotools to CMake
+  - Support for BitBucket and AppVeyor as continuous integration service providers
+
+* bugfixes:
+  - Fixed compile issues for newer libpng versions (> v1.4)
+  - Fixed compile issues for newer giflib versions
+  - Fixed numerous conversion warnings detected by static code analysis
+
+New in v1.7.0 (2010-02-26):
+* Added CGImage based backend on OS X.
+* Added Quicktime based backend for older OS X versions.
+* Added GDI+ based backend for Windows.
+* Added Jasper/JPEG 2000 support.
+* Added Visual Studio project files.
+* Added Universal Binary support for OS X.
+* Added pkg-config description.
+* Added support for Windows 64-bit.
+* Fixed QImage backend to work with Qt4.
+* Fixed various memory leaks.
+* Fixed various build system and compile/link issues.
+
+New in v1.6.1 (2004-10-08):
+* Switched resize filter from Lorenz3 to Bell filter to avoid
+  some unwanted artifacts when resizing images.
+
+New in v1.6 (2003-12-12):
+* Added support for reading an image one line at a time
+* Added functions for setting external dynamic loader interface
+  (not currently in use)
+* Disabled dysfunctional guile support
+
+New in v1.5:
+* Extended streaming interface to support seeking in a stream
+* Added functions to set color component order
+
+New in v1.4:
+* Added stream interface used for reading audio
+
+New in v1.3 (2001-12-03):
+* Added simage_resize3d
+
+New in v1.2 (2001-06-01):
+* movie support
+* guile binding
+
+New in v1.1 (2001-02-05):
+* save capabilities
+
+New in v1.0 (2000-10-23):
+* first release

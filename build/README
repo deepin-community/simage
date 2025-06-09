@@ -1,0 +1,75 @@
+
+misc/
+        A directory for various scripts, and the location to put the GDI+
+        SDK for when building simage from one of the msvc*/ directories.
+
+msvc6/
+        Visual Studio build files for Visual Studio 6.
+        Requires the GDI+ SDK.  See misc/README.GDI+.
+
+msvc7/
+        Visual Studio build files for Visual Studio 7/7.1.
+        Requires the GDI+ SDK.  See misc/README.GDI+.
+
+msvc8/
+        Visual Studio build files for Visual Studio 8.
+        Requires the GDI+ SDK.  See misc/README.GDI+.
+
+msvc9/
+        Visual Studio build files for Visual Studio 9.
+        Requires the GDI+ SDK.  See misc/README.GDI+.
+
+simage.spec.in
+
+        Template processed by configure script to generate an RPM
+        specification file simage.spec.
+
+simage.iwz.in
+
+        Template processed by configure script to generate
+        specification file for InstallShield Express v2.12. Invoke the
+        script by running
+
+	       $ cd [simage_builddir]
+               $ IsxBuild.exe build/simage.iwz -E -O
+
+        A self-extracting executable SETUPEX.EXE with the
+        InstallShield install should then be available under
+        [simage_builddir]/build/simage/.
+
+build_simage_win32.sh
+
+        Builds simage for the Win32 platform in different
+        configurations. All dependant libraries will be downloaded
+        using wget.
+
+        * Requires cygwin, wget and VisualC++ V6 
+        * Run from the command line in any directory.
+
+build_simage_libs_win32.sh
+
+        Downloads and builds all libraries simage depends on.
+
+        * Requires cygwin, wget and VisualC++ V6 
+        * Run from the command line in any directory.
+
+
+libungif_win32.diff
+
+        Patches libungif-4.1.0 to work on the Win32 platform.
+
+        This patch is used by build_simage_win32.sh.
+
+libungif_win32.mak
+
+        Makefile for building libungif-4.1.0 on the Win32 platform.
+
+        This file is used by build_simage_win32.sh.
+
+libungif_win32.dsp
+
+        VisualC++ project file for building libungif-4.1.0.
+
+        This file was used to create the above makefile, and
+        is kept for future reference.
+
