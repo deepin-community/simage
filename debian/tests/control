@@ -1,0 +1,2 @@
+Tests: check1 check2
+Depends: libsimage-dev, build-essential

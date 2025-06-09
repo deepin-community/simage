@@ -1,0 +1,144 @@
+From: Steve Robbins <steve@sumost.ca>
+Date: Sun, 2 Jul 2023 13:53:44 -0500
+Subject: Change non-error output to stdout instead of stderr.
+
+This is important for the example programs used in debian/tests,
+because autopkgtest considers a test failed if any output appears on STDOUT.
+---
+ examples/simage-convert.c        | 24 ++++++++++++------------
+ examples/simage-read-line-test.c |  8 ++++----
+ 2 files changed, 16 insertions(+), 16 deletions(-)
+
+diff --git a/examples/simage-convert.c b/examples/simage-convert.c
+index c73a2c5..96dabc0 100644
+--- a/examples/simage-convert.c
++++ b/examples/simage-convert.c
+@@ -137,17 +137,17 @@ int main(int argc, char ** argv)
+     }
+   }
+ 
+-  fprintf(stderr,"read image: %s...", infile);
++  fprintf(stdout,"read image: %s...", infile);
+   buf = simage_read_image(infile, &w, &h, &nc);
+   if (buf) {
+-    fprintf(stderr,"done\n");
++    fprintf(stdout,"done\n");
+   }
+   else {
+     fprintf(stderr,"Unable to read file %s\n", argv[1]);
+     return -1;
+   }
+ 
+-  fprintf(stderr,"image size: (%d, %d), components: %d\n",
++  fprintf(stdout,"image size: (%d, %d), components: %d\n",
+           w, h, nc);
+ 
+   if (xmul > 0.0f) {
+@@ -157,11 +157,11 @@ int main(int argc, char ** argv)
+   if (neww > 0 && newh > 0 && (neww != w || newh != h)) {
+     unsigned char * newbuf;
+ 
+-    fprintf(stderr,"resizing image: (%d, %d) to (%d %d)...",
++    fprintf(stdout,"resizing image: (%d, %d) to (%d %d)...",
+             w, h, neww, newh);
+     newbuf = simage_resize(buf, w, h, nc,
+                            neww, newh);
+-    fprintf(stderr,"done\n");
++    fprintf(stdout,"done\n");
+     simage_free_image(buf);
+     buf = newbuf;
+     w = neww;
+@@ -173,12 +173,12 @@ int main(int argc, char ** argv)
+     int ac;
+     int w2, h2, nc2;
+     unsigned char * buf2 = simage_read_image(addalpha, &w2, &h2, &nc2);
+-    fprintf(stderr,"alpha size: %d %d %d\n", w2, h2, nc2);
++    fprintf(stdout,"alpha size: %d %d %d\n", w2, h2, nc2);
+     if (buf2) {
+       if (w == w2 && h == h2 && (nc2 == 1 || nc2 == 2 || nc2 == 4)) {
+         unsigned char * dstbuf = buf;
+         if (nc == 1 || nc == 3) {
+-          fprintf(stderr,"adding alpha channel\n");
++          fprintf(stdout,"adding alpha channel\n");
+           dstbuf = (unsigned char*) malloc((size_t)w*h*(nc+1));
+           for (y = 0; y < h; y++) {
+             for (x = 0; x < w; x++) {
+@@ -193,7 +193,7 @@ int main(int argc, char ** argv)
+         if (nc2 == 2) ac = 1;
+         if (nc2 == 4) ac = 3;
+ 
+-        fprintf(stderr,"merging in alpha channel\n");
++        fprintf(stdout,"merging in alpha channel\n");
+         for (y = 0; y < h; y++) {
+           for (x = 0; x < w; x++) {
+             dstbuf[y*w*nc + x*nc + (nc-1)] = buf2[y*w*nc2 + x * nc2 + ac];
+@@ -238,7 +238,7 @@ int main(int argc, char ** argv)
+       }
+       p++;
+     }
+-    fprintf(stderr,"alpha threshold changed %d pixels\n", cnt);
++    fprintf(stdout,"alpha threshold changed %d pixels\n", cnt);
+   }
+ 
+   if (gray && nc >= 3) {
+@@ -272,7 +272,7 @@ int main(int argc, char ** argv)
+       }
+       p += nc;
+     }
+-    fprintf(stderr,"undef'ed %d pixels\n", cnt);
++    fprintf(stdout,"undef'ed %d pixels\n", cnt);
+   }
+   if (mirrory) {
+     unsigned char * tmp = (unsigned char*) malloc((size_t)w*nc);
+@@ -288,7 +288,7 @@ int main(int argc, char ** argv)
+   }
+ 
+   if (save) {
+-    fprintf(stderr,"save image '%s'...", outfile);
++    fprintf(stdout,"save image '%s'...", outfile);
+     ret = simage_save_image(argv[2], buf, w, h, nc, ext);
+     simage_free_image(buf);
+     if (ret != 1) {
+@@ -296,7 +296,7 @@ int main(int argc, char ** argv)
+       return -1;
+     }
+     else {
+-      fprintf(stderr,"done\n");
++      fprintf(stdout,"done\n");
+     }
+   }
+   return 0;
+diff --git a/examples/simage-read-line-test.c b/examples/simage-read-line-test.c
+index f541f22..0b2d314 100644
+--- a/examples/simage-read-line-test.c
++++ b/examples/simage-read-line-test.c
+@@ -55,25 +55,25 @@ int main(int argc, char ** argv)
+   h = s_image_height(image);
+   nc = s_image_components(image);
+ 
+-  fprintf(stderr,"testing file: %s, %d %d %d\n", argv[1], w, h, nc);
++  fprintf(stdout,"testing file: %s, %d %d %d\n", argv[1], w, h, nc);
+ 
+   row = (unsigned char*) malloc((size_t)w*nc);
+ 
+-  fprintf(stderr,"testing step: %s, %d %d %d\n", argv[1], w, h, nc);
++  fprintf(stdout,"testing step: %s, %d %d %d\n", argv[1], w, h, nc);
+   for (i = 0; i < h; i += 146) {
+     if (!s_image_read_line(image, i, row)) {
+       fprintf(stderr,"failed to read line %d\n", i);
+     }
+   }
+ 
+-  fprintf(stderr,"testing normal: %s, %d %d %d\n", argv[1], w, h, nc);
++  fprintf(stdout,"testing normal: %s, %d %d %d\n", argv[1], w, h, nc);
+   for (i = 0; i < h; i++) {
+     if (!s_image_read_line(image, i, row)) {
+       fprintf(stderr,"failed to read line %d\n", i);
+     }
+   }
+ 
+-  fprintf(stderr,"testing backwards: %s, %d %d %d\n", argv[1], w, h, nc);
++  fprintf(stdout,"testing backwards: %s, %d %d %d\n", argv[1], w, h, nc);
+   for (i = h-1; i >=0; i--) {
+     if (!s_image_read_line(image, i, row)) {
+       fprintf(stderr,"failed to read line %d\n", i);

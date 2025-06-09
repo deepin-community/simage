@@ -1,0 +1,20 @@
+#!/bin/sh
+# autopkgtest check for simage
+# (C) 2016 Anton Gladky <gladk@debian.org>
+
+set -e
+
+WORKDIR=$(mktemp -d)
+trap "rm -rf $WORKDIR" 0 INT QUIT ABRT PIPE TERM
+cp debian/tests/a_in.png $WORKDIR/ 
+cp examples/simage-convert.c $WORKDIR/ 
+
+cd $WORKDIR
+
+gcc simage-convert.c -lsimage -o simage-convert
+echo "build: OK"
+
+./simage-convert a_in.png a_out.png
+ls -ln
+
+echo "run: OK"

@@ -1,0 +1,22 @@
+From: Steve Robbins <steve@sumost.ca>
+Date: Sun, 2 Jul 2023 14:12:33 -0500
+Subject: Don't add build flags to pc file; lintian complains.
+
+---
+ CMakeLists.txt | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 900aa71..ebf37fa 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -817,9 +817,6 @@ if(UNIX OR MINGW)
+   set(PKG_CONFIG_REQUIRES "$<$<BOOL:${PKG_CONFIG_REQUIRES}>:$<JOIN:${PKG_CONFIG_REQUIRES}, >>")
+   set(PKG_CONFIG_REQUIRES_PRIVATE "$<$<BOOL:${PKG_CONFIG_REQUIRES_PRIVATE}>:$<JOIN:${PKG_CONFIG_REQUIRES_PRIVATE}, >>")
+ 
+-  set(PKG_CONFIG_CFLAGS "${CMAKE_C_FLAGS} ${CMAKE_C_FLAGS_RELEASE} ${PKG_CONFIG_CFLAGS}")
+-  set(PKG_CONFIG_CXXFLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_RELEASE} ${PKG_CONFIG_CXXFLAGS}")
+-
+   # PKG-CONFIG settings
+   # according to https://www.gnu.org/prep/standards/html_node/Directory-Variables.html
+   # .pc files should be written as ${prefix}/include instead of /usr/local/include
